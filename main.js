@@ -7,10 +7,11 @@ const cx = innerWidth / 2;
 const cy = innerHeight / 2;
 const ctx = canvas.getContext('2d');
 let pause = false;
-const targetCounts = 10;
+const targetCounts = 5;
 
 function recursionDraw(radius, itrCnt) {
   if (itrCnt <= 0) return;
+  if (itrCnt >= 2) ray.dotRadius = radius * 1.2;
   drawCircle(cx, cy, radius, '#0B71F4');
   recursionDraw(radius * 1.2, itrCnt - 1);
 }
@@ -20,6 +21,7 @@ class Ray {
     this.length = (innerWidth / 2) * 0.9;
     this.angle = 0;
     this.angleStep = Math.PI / 360;
+    this.dotRadius = 50;
   }
   draw() {
     ctx.save();
@@ -28,6 +30,7 @@ class Ray {
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.arc(0, 0, 5, 0, Math.PI * 2);
+    ctx.arc(this.dotRadius, 0, 5, 0, Math.PI * 2);
     ctx.fillStyle = '#0B71F4';
     ctx.fill();
     ctx.lineTo(0 + this.length, 0);
